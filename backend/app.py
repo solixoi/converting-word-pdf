@@ -7,7 +7,9 @@ import pythoncom
 import win32com.client
 from tqdm import tqdm
 import time  
+import colorama
 
+colorama.init()
 app = Flask(__name__)
 CORS(app)
 
@@ -28,13 +30,16 @@ def convert_file():
             file.save(temp_docx.name)
             docx_path = temp_docx.name
         
-        print("Starting conversion...")
-
-        progress = tqdm(total=3, desc="Conversion Progress", ncols=100, bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} {rate_fmt}")
-
+        print("\033[92mStarting conversion...\033[0m")
+        progress = tqdm(
+            total=3,
+            desc="\033[92mConversion Progress\033[0m",
+            ncols=70,
+            bar_format="{l_bar}\033[92m{bar}\033[0m {n_fmt}/{total_fmt}"
+        )
+         
         progress.set_postfix(step="Loading")
         progress.update(1)
-        time.sleep(1)  
 
         pdf_path = docx_path.replace('.docx', '.pdf')
         
@@ -45,14 +50,12 @@ def convert_file():
         doc = word.Documents.Open(docx_path)
         
         progress.set_postfix(step="Converting")
-        time.sleep(3) 
         doc.SaveAs(pdf_path, FileFormat=17) 
         doc.Close()
         word.Quit()
 
         progress.set_postfix(step="Saving")
         progress.update(1)
-        time.sleep(1)  
         
         progress.set_postfix(step="Done")
         progress.update(1)
