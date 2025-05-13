@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,17 @@
             justify-content: center;
             padding: 20px;
         }
+
         .converter-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 40px;
             width: 100%;
             max-width: 600px;
             text-align: center;
         }
+
         .upload-area {
             border: 3px dashed #c3cfe2;
             border-radius: 15px;
@@ -32,15 +35,18 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .upload-area:hover {
             border-color: #6c757d;
             background-color: #f8f9fa;
         }
+
         .upload-icon {
             font-size: 48px;
             color: #6c757d;
             margin-bottom: 15px;
         }
+
         .btn-convert {
             background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
             border: none;
@@ -49,20 +55,24 @@
             border-radius: 10px;
             transition: all 0.3s ease;
         }
+
         .btn-convert:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
         .btn-convert:disabled {
             background: #e9ecef;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
+
         .loading {
             display: none;
             margin: 20px 0;
         }
+
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -71,38 +81,51 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         .error-message {
             color: #dc3545;
             margin-top: 10px;
             display: none;
         }
+
         .success-message {
             color: #28a745;
             margin-top: 10px;
             display: none;
         }
+
         .file-info {
             margin-top: 15px;
             font-size: 14px;
             color: #6c757d;
         }
+
         .file-name {
             font-weight: bold;
             color: #495057;
         }
+
         .file-size {
             color: #6c757d;
         }
+
         .drag-over {
             border-color: #6c757d;
             background-color: #f8f9fa;
         }
     </style>
 </head>
+
 <body>
     <div class="converter-container">
         <h1 class="mb-4">Word to PDF Converter</h1>
@@ -180,9 +203,17 @@
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
+
             const file = e.dataTransfer.files[0];
+            if (!file) return;
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+
             handleFile(file);
         });
+
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -234,4 +265,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
